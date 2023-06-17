@@ -1,0 +1,10 @@
+.vscode/
+.venv/
+.pytest_cache/
+**.terraform**
+**terraform.tfstate**
+**.tfplan
+.env
+**files**
+**__pycache__**
+**credentials/
