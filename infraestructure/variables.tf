@@ -46,3 +46,8 @@ variable "github_repo" {
   default     = "https://github.com/quesmues/google-cloud-api-example.git"
 }
 
+variable "app_secret_key_file" {
+  description = "Secret Key que será utilizada pela aplicação através da variavél secreta SECRET_KEY"
+  type        = string
+  default     = "credentials/secret-key.txt"
+}

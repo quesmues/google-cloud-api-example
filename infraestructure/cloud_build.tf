@@ -1,35 +1,5 @@
 # Criar conexão com GitHub.com
 
-resource "google_secret_manager_secret" "github-token-secret" {
-  provider  = google-beta
-  secret_id = "github-token-secret"
-
-  replication {
-    automatic = true
-  }
-}
-
-data "google_iam_policy" "p4sa-secretAccessor" {
-  provider = google-beta
-  binding {
-    role    = "roles/secretmanager.secretAccessor"
-    members = ["serviceAccount:service-${data.google_project.project.number}@gcp-sa-cloudbuild.iam.gserviceaccount.com"]
-  }
-}
-
-resource "google_secret_manager_secret_version" "github-token-secret-version" {
-  provider    = google-beta
-  secret      = google_secret_manager_secret.github-token-secret.id
-  secret_data = file(var.github_credentials_file)
-}
-
-resource "google_secret_manager_secret_iam_policy" "policy" {
-  provider    = google-beta
-  secret_id   = google_secret_manager_secret.github-token-secret.secret_id
-  policy_data = data.google_iam_policy.p4sa-secretAccessor.policy_data
-}
-
-
 resource "google_cloudbuildv2_connection" "my-connection" {
   provider = google-beta
   location = data.google_client_config.current.region

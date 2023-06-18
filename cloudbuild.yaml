@@ -43,7 +43,7 @@ steps:
 
 availableSecrets:
   secretManager:
-    - versionName: projects/$PROJECT_ID/secrets/app-secret/versions/latest
+    - versionName: projects/$PROJECT_ID/secrets/app-secret-key/versions/latest
       env: "SECRET_KEY"
 
 images:
