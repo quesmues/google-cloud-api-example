@@ -12,7 +12,7 @@ load_dotenv(str(filepath) + "/.env")
 class Settings(BaseSettings):
     debug: bool = os.getenv("DEBUG")
     app_name: str = "Google Cloud API Example"
-    version: str = "0.0.1"
+    version: str = "0.0.2"
     prefix_v1: str = "/api/v1"
     
     gcp_certificate_path: str = os.getenv("GCP_CERTIFICATE_PATH")
