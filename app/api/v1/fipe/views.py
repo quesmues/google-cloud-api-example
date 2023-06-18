@@ -36,7 +36,7 @@ async def enviar_marcas_fila_view(veiculo: TipoVeiculo) -> List[Marca]:
     marcas = await db_get_marcas(veiculo)
     # Enviar as marcas, marca por marca para a API de processamento dos modelos
     tasks = [create_http_task(relative_uri=f"{settings.prefix_v1}/task/get-modelos",
-                              payload=TaskRequest(marca=marcas).dict()) 
+                              payload=TaskRequest(marca=marca).dict()) 
              for marca in marcas]
     await asyncio.gather(*tasks)
     return Message(detail=CARGA_INICIAL_SUCESSO)
