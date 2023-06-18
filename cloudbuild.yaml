@@ -39,12 +39,12 @@ steps:
         "--set-env-vars",
         "FIPE_BASE_URL=https://parallelum.com.br/fipe/api/v1",
       ]
-      secretEnv: ['SECRET_KEY']
+    secretEnv: ["SECRET_KEY"]
 
 availableSecrets:
   secretManager:
-  - versionName: projects/$PROJECT_ID/secrets/app-secret/versions/latest
-    env: 'SECRET_KEY'
+    - versionName: projects/$PROJECT_ID/secrets/app-secret/versions/latest
+      env: "SECRET_KEY"
 
 images:
   - gcr.io/$PROJECT_ID/google-cloud-api-example:$COMMIT_SHA
