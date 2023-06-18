@@ -77,3 +77,12 @@ resource "google_cloudbuild_trigger" "repo-trigger" {
 
   filename = "cloudbuild.yaml"
 }
+
+
+# IAM role para o Cloud Run
+
+resource "google_project_iam_member" "cloud_run" {
+  project = data.google_client_config.current.project
+  role    = "roles/run.admin"
+  member  = "serviceAccount:service-${data.google_project.project.number}@gcp-sa-cloudbuild.iam.gserviceaccount.com"
+}

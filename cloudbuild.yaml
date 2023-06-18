@@ -23,6 +23,7 @@ steps:
         "gcr.io/$PROJECT_ID/google-cloud-api-example:$COMMIT_SHA",
         "--region",
         "southamerica-east1",
+        "--allow-unauthenticated",
       ]
 images:
   - gcr.io/$PROJECT_ID/google-cloud-api-example:$COMMIT_SHA
