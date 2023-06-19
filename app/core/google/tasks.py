@@ -1,6 +1,7 @@
 import json
-from typing import Dict
+from typing import Any, Dict
 
+from fastapi.encoders import jsonable_encoder
 from google.cloud import tasks_v2
 
 from app.config.settings import settings
@@ -9,7 +10,7 @@ from app.core.google.service import uri
 
 tasks_client = tasks_v2.CloudTasksClient(credentials=credentials)
 
-async def create_http_task(relative_uri: str,  payload: Dict):
+async def create_http_task(relative_uri: str, payload: Any):
     """ 
     Cria e envia a task para ser executada, através do Cloud Run
     
@@ -20,8 +21,8 @@ async def create_http_task(relative_uri: str,  payload: Dict):
         http_request=tasks_v2.HttpRequest(
             http_method=tasks_v2.HttpMethod.POST,
             url = f"{uri}{relative_uri}",
-            headers={"Content-type": "application/octet-stream"},
-            body=json.dumps(payload).encode(),
+            headers={"Content-Type": "application/json"},
+            body=json.dumps(jsonable_encoder(payload)).encode(),
         )
     )
 
