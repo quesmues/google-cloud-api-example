@@ -27,12 +27,9 @@ async def db_get_marcas() -> List:
   return [Marca(**marca) for marca in marcas]
 
 
-async def db_get_veiculos(marca) -> List:
-  filter_codigo = FieldFilter(["marca", "codigo"], "==", str(marca.codigo))
-  filter_nome = FieldFilter(["marca", "nome"], "==", str(marca.nome))
-  and_filter = And(filters=[filter_codigo, filter_nome])
+async def db_get_veiculos(codigo: str) -> List:
   veiculos = client.collection("veiculos"). \
-    where(filter=and_filter). \
+    where("marca.codigo", "==", str(codigo)). \
     stream()
   veiculos = [i.to_dict() async for i in veiculos]
   return [Veiculo(**veiculo) for veiculo in veiculos]

@@ -1,8 +1,8 @@
-from typing import List
+from typing import Annotated, List
 
-from fastapi import APIRouter, status
+from fastapi import APIRouter, Query, status
 
-from app.api.v1.fipe.models import Veiculo
+from app.api.v1.fipe.models import MarcaForm, Veiculo
 from app.api.v1.fipe.views import (carga_inicial_view, enviar_marca_fila_view,
                                    enviar_marcas_fila_view, get_marcas_view,
                                    get_veiculos_view)
@@ -22,8 +22,8 @@ async def get_marcas():
     return await get_marcas_view()
 
 @router.get("/veiculos", response_model=List[Veiculo], status_code=status.HTTP_200_OK)
-async def get_veiculos(marca: Marca):
-    return await get_veiculos_view(marca)
+async def get_veiculos(codigo: Annotated[str | None, Query(max_length=50, description="Código da Marca")]):
+    return await get_veiculos_view(codigo)
 
 @router.post("/enviar/marcas", response_model=Message, status_code=status.HTTP_200_OK, 
             description="Envia todas as marcas para processamento da fila")
