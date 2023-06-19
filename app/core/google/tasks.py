@@ -21,7 +21,7 @@ async def create_http_task(relative_uri: str,  payload: Dict):
             http_method=tasks_v2.HttpMethod.POST,
             url = f"{uri}{relative_uri}",
             headers={"Content-type": "application/json"},
-            body=json.dumps(payload).encode(),
+            body=json.dumps(payload),
         )
     )
 
