@@ -10,7 +10,8 @@ from app.api.v1.fipe.services import (db_add_marcas, db_get_marcas,
 from app.config.settings import settings
 from app.core.google.tasks import create_http_task
 from app.core.messages import (CARGA_INICIAL_REALIZADA, CARGA_INICIAL_SUCESSO,
-                               CRIAR_TASK_SUCESSO, CRIAR_TASKS_SUCESSO, Message)
+                               CRIAR_TASK_SUCESSO, CRIAR_TASKS_SUCESSO,
+                               Message)
 
 
 async def carga_inicial_view(veiculo: TipoVeiculo) -> List[Marca]:
@@ -46,4 +47,4 @@ async def enviar_marca_fila_view(marca: Marca) -> List[Marca]:
     # Enviar a marca a API de processamento dos modelos
     await create_http_task(relative_uri=f"{settings.prefix_v1}/task/get-modelos",
                            payload=TaskRequest(marca=marca).dict())
-    return Message(detail=CRIAR_TASK_SUCESSO.format(marca=Marca.dict()))
+    return Message(detail=CRIAR_TASK_SUCESSO.format(marca=marca.dict()))
