@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict
+from typing import Any
 
 from fastapi.encoders import jsonable_encoder
 from google.cloud import tasks_v2

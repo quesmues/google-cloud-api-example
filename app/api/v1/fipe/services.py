@@ -1,8 +1,6 @@
 import asyncio
 from typing import List
 
-from google.cloud.firestore_v1.base_query import And, FieldFilter
-
 from app.api.v1.fipe.models import Veiculo
 from app.api.v1.shared_models import Marca
 from app.config.settings import settings
