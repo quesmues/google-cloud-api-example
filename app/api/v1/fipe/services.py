@@ -1,7 +1,10 @@
 import asyncio
 from typing import List
 
-from app.api.v1.fipe.models import Marca
+from google.cloud.firestore_v1.base_query import And, FieldFilter
+
+from app.api.v1.fipe.models import Veiculo
+from app.api.v1.shared_models import Marca
 from app.config.settings import settings
 from app.core.google.firestore import client
 from app.core.services import get_data
@@ -22,6 +25,17 @@ async def db_get_marcas() -> List:
   marcas = client.collection("marcas").stream()
   marcas = [i.to_dict() async for i in marcas]
   return [Marca(**marca) for marca in marcas]
+
+
+async def db_get_veiculos(marca) -> List:
+  filter_codigo = FieldFilter(["marca", "codigo"], "==", str(marca.codigo))
+  filter_nome = FieldFilter(["marca", "nome"], "==", str(marca.nome))
+  and_filter = And(filters=[filter_codigo, filter_nome])
+  veiculos = client.collection("veiculos"). \
+    where(filter=and_filter). \
+    stream()
+  veiculos = [i.to_dict() async for i in veiculos]
+  return [Veiculo(**veiculo) for veiculo in veiculos]
 
 
 async def db_add_marcas(marcas: List[Marca]) -> None:
